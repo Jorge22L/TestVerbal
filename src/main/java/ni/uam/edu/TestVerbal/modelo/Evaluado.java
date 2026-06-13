@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.openxava.annotations.Hidden;
 import org.openxava.annotations.Required;
+import org.openxava.annotations.View;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +13,14 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@View(members = "Datos personales {" +
+"primer nombre, segundo nombre;"+
+"primer apellido, segundo apellido;"+
+"fechaNacimiento, edad;"+
+"sexo;"+
+"estudios"+
+"profesion"
++ "}")
 public class Evaluado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
