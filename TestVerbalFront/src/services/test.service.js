@@ -8,10 +8,6 @@ export function obtenerPreguntas() {
     return repo.obtenerPreguntas();
 }
 
-export function crearAplicacion(evaluadoId, testId) {
-    return repo.crearAplicacion(evaluadoId, testId);
-}
-
 export function guardarRespuesta(data) {
     return repo.guardarRespuesta(data);
 }
@@ -23,3 +19,18 @@ export function finalizarAplicacion(aplicacionId) {
 export function obtenerResumen() {
     return repo.obtenerResumen();
 }
+
+export async function crearAplicacion(evaluadoId, testId, codigoAcceso) {
+    if (!evaluadoId) throw new Error("Debe seleccionar un evaluado");
+    if (!codigoAcceso) throw new Error("Debe ingresar el código de acceso");
+
+    const valido = await repo.validarEvaluado(evaluadoId, codigoAcceso);
+
+    if (!valido) {
+        throw new Error("Código de acceso incorrecto");
+    }
+
+    return repo.crearAplicacion(evaluadoId, testId || 1);
+}
+
+export const obtenerTest = (id) => repo.obtenerTest(id);

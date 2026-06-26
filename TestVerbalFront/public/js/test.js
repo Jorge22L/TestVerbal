@@ -5,6 +5,35 @@ const btnFinalizar = document.getElementById("finalizar");
 
 let totalPreguntas = 0;
 
+const timer = document.getElementById("timer");
+let segundosRestantes = 0;
+let intervalo = null;
+
+async function cargarTiempo() {
+    const response = await fetch("/api/test/1");
+    const test = await response.json();
+
+    segundosRestantes = Number(test.tiempominutos) * 60;
+    iniciarTemporizador();
+}
+
+function iniciarTemporizador() {
+    intervalo = setInterval(() => {
+        const minutos = Math.floor(segundosRestantes / 60);
+        const segundos = segundosRestantes % 60;
+
+        timer.textContent =
+            `${String(minutos).padStart(2, "0")}:${String(segundos).padStart(2, "0")}`;
+
+        if (segundosRestantes <= 0) {
+            clearInterval(intervalo);
+            finalizarTest();
+        }
+
+        segundosRestantes--;
+    }, 1000);
+}
+
 async function cargarPreguntas() {
     const aplicacionId = localStorage.getItem("aplicacionId");
 
@@ -91,4 +120,5 @@ btnFinalizar.addEventListener("click", async () => {
     window.location.href = "resumen.html";
 });
 
+cargarTiempo();
 cargarPreguntas();

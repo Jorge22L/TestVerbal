@@ -4,81 +4,100 @@
 
 body {
     margin: 0;
-    font-family: system-ui, Arial, sans-serif;
-    background: #f3f4f6;
-    color: #111827;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: #eef3f8;
+    color: #1f2937;
 }
 
 .hero {
-    background: linear-gradient(135deg, #1f2937, #2563eb);
+    background: linear-gradient(135deg, #006d77, #0099a8);
     color: white;
-    padding: 36px 20px;
+    padding: 42px 20px;
     text-align: center;
 }
 
 .hero h1 {
     margin: 0;
+    font-size: 2rem;
 }
 
 .hero p {
-    margin-top: 8px;
-    color: #dbeafe;
+    margin-top: 10px;
+    opacity: 0.95;
 }
 
 .container {
-    width: min(1100px, 94%);
-    margin: 30px auto;
+    width: min(1000px, 92%);
+    margin: 32px auto;
 }
 
 .card {
     background: white;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #006d77;
 }
 
 label {
     display: block;
+    margin-top: 18px;
     margin-bottom: 8px;
     font-weight: 700;
 }
 
 select,
+input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+}
+
+select:focus,
+input:focus {
+    border-color: #0099a8;
+    box-shadow: 0 0 0 3px rgba(0, 153, 168, 0.15);
+}
+
 button {
     width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    font-size: 1rem;
-}
-
-select {
-    border: 1px solid #d1d5db;
-    margin-bottom: 16px;
-}
-
-button {
+    margin-top: 24px;
+    padding: 14px;
     border: none;
-    background: #2563eb;
+    border-radius: 12px;
+    background: #0099a8;
     color: white;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 800;
     cursor: pointer;
 }
 
 button:hover {
-    background: #1d4ed8;
+    background: #007c89;
 }
 
 .link {
     display: inline-block;
-    margin-top: 16px;
-    color: #2563eb;
-    text-decoration: none;
+    margin-top: 18px;
+    color: #007c89;
     font-weight: 700;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
 
 .estado {
-    margin-top: 14px;
-    color: #6b7280;
+    margin-top: 16px;
+    color: #64748b;
 }
 
 .topbar {
@@ -86,43 +105,63 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    margin-bottom: 22px;
 }
 
 .badge {
-    background: #dbeafe;
-    color: #1d4ed8;
-    padding: 8px 12px;
+    display: inline-block;
+    background: #e0f7fa;
+    color: #006d77;
+    padding: 9px 14px;
     border-radius: 999px;
-    font-weight: 700;
+    font-weight: 800;
+}
+
+#timer {
+    display: block;
+    width: fit-content;
+    margin: 0 0 18px auto;
+    background: #fff3cd;
+    color: #8a5a00;
 }
 
 .pregunta {
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 18px;
-    margin-bottom: 18px;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #0099a8;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #ffffff;
 }
 
 .pregunta h3 {
     margin-top: 0;
+    line-height: 1.45;
 }
 
 .autor {
-    color: #6b7280;
+    color: #64748b;
     font-style: italic;
 }
 
 .opcion {
     display: block;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #e5e7eb;
-    border-radius: 10px;
+    padding: 13px;
+    margin: 10px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
     cursor: pointer;
+    transition: 0.2s;
 }
 
 .opcion:hover {
-    background: #f9fafb;
+    background: #f0fdfa;
+    border-color: #0099a8;
+}
+
+.opcion input {
+    width: auto;
+    margin-right: 8px;
 }
 
 .grid {
@@ -132,20 +171,20 @@ button:hover {
 }
 
 .resultado-card {
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 18px;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
 }
 
 .progress {
     height: 12px;
-    background: #e5e7eb;
+    background: #e2e8f0;
     border-radius: 999px;
     overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
-    background: #2563eb;
-    width: 0%;
+    background: #0099a8;
 }

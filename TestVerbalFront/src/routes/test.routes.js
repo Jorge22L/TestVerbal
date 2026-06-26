@@ -5,7 +5,8 @@ import {
     crearAplicacion,
     guardarRespuesta,
     finalizarAplicacion,
-    obtenerResumen
+    obtenerResumen,
+    obtenerTest
 } from "../controllers/test.controller.js";
 
 const router = Router();
@@ -16,5 +17,6 @@ router.post("/aplicaciones", crearAplicacion);
 router.post("/respuestas", guardarRespuesta);
 router.post("/aplicaciones/:id/finalizar", finalizarAplicacion);
 router.get("/resumen", obtenerResumen);
+router.get("/test/:id", obtenerTest);
 
 export default router;

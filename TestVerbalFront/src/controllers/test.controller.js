@@ -18,11 +18,18 @@ export async function obtenerPreguntas(req, res) {
 
 export async function crearAplicacion(req, res) {
     try {
-        const { evaluadoId, testId } = req.body;
-        const aplicacionId = await testService.crearAplicacion(evaluadoId, testId);
+        const { evaluadoId, testId, codigoAcceso } = req.body;
+
+        const aplicacionId = await testService.crearAplicacion(
+            evaluadoId,
+            testId,
+            codigoAcceso
+        );
+
         res.status(201).json({ aplicacionId });
+
     } catch (error) {
-        res.status(500).json({ mensaje: error.message });
+        res.status(400).json({ mensaje: error.message });
     }
 }
 
@@ -47,6 +54,15 @@ export async function finalizarAplicacion(req, res) {
 export async function obtenerResumen(req, res) {
     try {
         res.json(await testService.obtenerResumen());
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+}
+
+
+export async function obtenerTest(req, res) {
+    try {
+        res.json(await testService.obtenerTest(req.params.id));
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
     }

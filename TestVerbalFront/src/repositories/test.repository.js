@@ -55,7 +55,7 @@ export async function obtenerPreguntas() {
 export async function crearAplicacion(evaluadoId, testId) {
     const { rows } = await pool.query(`
         INSERT INTO aplicacionTest
-        (evaluado_id, test_id, fecha_inicio, estado)
+        (evaluado_id, test_id, fechaInicio, estado)
         VALUES ($1, $2, NOW(), 'EN_PROCESO')
         RETURNING id
     `, [evaluadoId, testId]);
@@ -72,32 +72,71 @@ export async function guardarRespuesta({ aplicacionId, preguntaId, opcionId }) {
 }
 
 export async function finalizarAplicacion(aplicacionId) {
-    const { rows } = await pool.query(`
-        SELECT COUNT(*)::int AS aciertos
-        FROM respuesta_verbal rv
-        JOIN opcion_verbal ov ON ov.id = rv.opcion_seleccionada_id
-        WHERE rv.aplicacion_id = $1
-        AND ov.correcta = true
-    `, [aplicacionId]);
+    const client = await pool.connect();
 
-    const aciertos = rows[0].aciertos;
+    try {
+        await client.query("BEGIN");
 
-    await pool.query(`
-        UPDATE aplicacionTest
-        SET fecha_final = NOW(), estado = 'CORREGIDA'
-        WHERE id = $1
-    `, [aplicacionId]);
+        const totalPreguntasResult = await client.query(`
+            SELECT COUNT(*)::int AS total
+            FROM preguntaverbal
+            WHERE activo = true
+        `);
 
-    await pool.query(`
-        INSERT INTO resultadoTest
-        (aplicacion_id, aciertos, errores, omitidas, puntajeDirecto)
-        VALUES ($1, $2, 0, 0, $2)
-    `, [aplicacionId, aciertos]);
+        const respondidasResult = await client.query(`
+            SELECT COUNT(*)::int AS total
+            FROM respuestaverbal
+            WHERE aplicacion_id = $1
+        `, [aplicacionId]);
 
-    return {
-        aciertos,
-        puntajeDirecto: aciertos
-    };
+        const correctasResult = await client.query(`
+            SELECT COUNT(*)::int AS total
+            FROM respuestaverbal rv
+            INNER JOIN opcionverbal ov 
+                ON ov.id = rv.opcionseleccionada_id
+            WHERE rv.aplicacion_id = $1
+            AND ov.correcta = true
+        `, [aplicacionId]);
+
+        const totalPreguntas = totalPreguntasResult.rows[0].total;
+        const respondidas = respondidasResult.rows[0].total;
+        const correctas = correctasResult.rows[0].total;
+
+        const incorrectas = respondidas - correctas;
+        const omitidas = totalPreguntas - respondidas;
+
+        await client.query(`
+            UPDATE aplicaciontest
+            SET fechafinal = NOW(), estado = 'CORREGIDA'
+            WHERE id = $1
+        `, [aplicacionId]);
+
+        await client.query(`
+            DELETE FROM resultadotest
+            WHERE aplicacion_id = $1
+        `, [aplicacionId]);
+
+        await client.query(`
+            INSERT INTO resultadotest
+            (aplicacion_id, aciertos, errores, omitidas, puntajedirecto)
+            VALUES ($1, $2, $3, $4, $2)
+        `, [aplicacionId, correctas, incorrectas, omitidas]);
+
+        await client.query("COMMIT");
+
+        return {
+            correctas,
+            incorrectas,
+            omitidas,
+            puntajeDirecto: correctas
+        };
+
+    } catch (error) {
+        await client.query("ROLLBACK");
+        throw error;
+    } finally {
+        client.release();
+    }
 }
 
 export async function obtenerResumen() {
@@ -116,4 +155,25 @@ export async function obtenerResumen() {
     `);
 
     return rows;
+}
+
+export async function validarEvaluado(evaluadoId, codigoAcceso) {
+    const { rows } = await pool.query(`
+        SELECT id
+        FROM evaluado
+        WHERE id = $1
+        AND codigoacceso = $2
+    `, [evaluadoId, codigoAcceso]);
+
+    return rows.length > 0;
+}
+
+export async function obtenerTest(id) {
+    const { rows } = await pool.query(`
+        SELECT id, nombre, tiempominutos
+        FROM testcomprensionverbal
+        WHERE id = $1
+    `, [id]);
+
+    return rows[0];
 }
