@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.hero {
+    background: linear-gradient(135deg, #1f2937, #2563eb);
+    color: white;
+    padding: 36px 20px;
+    text-align: center;
+}
+
+.hero h1 {
+    margin: 0;
+}
+
+.hero p {
+    margin-top: 8px;
+    color: #dbeafe;
+}
+
+.container {
+    width: min(1100px, 94%);
+    margin: 30px auto;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+select,
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+select {
+    border: 1px solid #d1d5db;
+    margin-bottom: 16px;
+}
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.link {
+    display: inline-block;
+    margin-top: 16px;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.estado {
+    margin-top: 14px;
+    color: #6b7280;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.badge {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.pregunta {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+
+.pregunta h3 {
+    margin-top: 0;
+}
+
+.autor {
+    color: #6b7280;
+    font-style: italic;
+}
+
+.opcion {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.opcion:hover {
+    background: #f9fafb;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.resultado-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.progress {
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #2563eb;
+    width: 0%;
+}
