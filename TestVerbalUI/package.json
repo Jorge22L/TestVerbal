@@ -1,0 +1,21 @@
+{
+  "name": "testverbalui",
+  "version": "1.0.0",
+  "description": "Frontend para la realización del TestVerbal",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch --env-file=.env src/server.js",
+    "start": "node --env-file=.env src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "morgan": "^1.11.0",
+    "pg": "^8.22.0"
+  }
+}
